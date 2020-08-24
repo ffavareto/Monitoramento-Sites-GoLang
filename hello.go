@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const monitoramentos = 3
+const delay = 5
 
 func main() {
 
@@ -57,10 +61,15 @@ func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
 	sites := []string{"https://faculdadeiv2.com.br", "https://iv2.com.br", "https://class.faculdadeiv2.com.br/#/apps/student/courses/beginner/modules"}
 
-	for i, site := range sites {
-		fmt.Println("Testando site", i, ":", site)
-		testaSite(site)
+	for i := 0; i < monitoramentos; i++ {
+		for i, site := range sites {
+			fmt.Println("Testando site", i, ":", site)
+			testaSite(site)
+		}
+		time.Sleep(delay * time.Second)
 	}
+
+	fmt.Println("")
 
 }
 
@@ -69,7 +78,9 @@ func testaSite(site string) {
 
 	if resp.StatusCode == 200 {
 		fmt.Println("O site", site, "está online!")
+		fmt.Println("")
 	} else {
 		fmt.Println("O site", site, "está com problemas, StatusCode;", resp.StatusCode)
+		fmt.Println("")
 	}
 }
