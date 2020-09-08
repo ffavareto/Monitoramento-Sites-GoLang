@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -105,12 +106,16 @@ func leSitesDoArquivo() []string {
 
 	for {
 		linha, err := leitor.ReadString('\n')
-		fmt.Println(linha)
+		linha = strings.TrimSpace(linha)
+
+		sites = append(sites, linha)
 
 		if err == io.EOF {
 			break
 		}
 	}
+
+	arquivo.Close()
 
 	return sites
 }
