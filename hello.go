@@ -62,7 +62,6 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	// sites := []string{"https://faculdadeiv2.com.br", "https://iv2.com.br", "https://class.faculdadeiv2.com.br/#/apps/student/courses/beginner/modules"}
 
 	sites := leSitesDoArquivo()
 
@@ -88,7 +87,7 @@ func testaSite(site string) {
 		fmt.Println("O site", site, "está online!")
 		registraLog(site, true)
 	} else {
-		fmt.Println("O site", site, "está com problemas, StatusCode;", resp.StatusCode)
+		fmt.Println("O site", site, "está com problemas, StatusCode:", resp.StatusCode)
 		registraLog(site, false)
 	}
 }
@@ -126,5 +125,5 @@ func registraLog(site string, status bool) {
 		fmt.Println(err)
 	}
 
-	fmt.Println(arquivo)
+	arquivo.Close()
 }
