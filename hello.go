@@ -13,6 +13,7 @@ const delay = 5
 func main() {
 
 	exibeIntroducao()
+	leSitesDoArquivo()
 
 	for {
 
@@ -59,7 +60,9 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	sites := []string{"https://faculdadeiv2.com.br", "https://iv2.com.br", "https://class.faculdadeiv2.com.br/#/apps/student/courses/beginner/modules"}
+	// sites := []string{"https://faculdadeiv2.com.br", "https://iv2.com.br", "https://class.faculdadeiv2.com.br/#/apps/student/courses/beginner/modules"}
+
+	sites := leSitesDoArquivo()
 
 	for i := 0; i < monitoramentos; i++ {
 		for i, site := range sites {
@@ -73,7 +76,11 @@ func iniciarMonitoramento() {
 }
 
 func testaSite(site string) {
-	resp, _ := http.Get(site)
+	resp, err := http.Get(site)
+
+	if err != nil {
+		fmt.Println("Ocorreuum erro: ", err)
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("O site", site, "está online!")
@@ -82,4 +89,18 @@ func testaSite(site string) {
 		fmt.Println("O site", site, "está com problemas, StatusCode;", resp.StatusCode)
 		fmt.Println("")
 	}
+}
+
+func leSitesDoArquivo() []string {
+	var sites []string
+
+	arquivo, err := os.Open("sites.txt")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
+
+	fmt.Println(arquivo)
+
+	return sites
 }
