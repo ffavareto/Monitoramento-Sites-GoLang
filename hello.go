@@ -16,7 +16,7 @@ const delay = 5
 func main() {
 
 	exibeIntroducao()
-	leSitesDoArquivo()
+	registraLog("site-falso", false)
 
 	for {
 
@@ -86,10 +86,10 @@ func testaSite(site string) {
 
 	if resp.StatusCode == 200 {
 		fmt.Println("O site", site, "está online!")
-		fmt.Println("")
+		registraLog(site, true)
 	} else {
 		fmt.Println("O site", site, "está com problemas, StatusCode;", resp.StatusCode)
-		fmt.Println("")
+		registraLog(site, false)
 	}
 }
 
@@ -116,6 +116,15 @@ func leSitesDoArquivo() []string {
 	}
 
 	arquivo.Close()
-
 	return sites
+}
+
+func registraLog(site string, status bool) {
+	arquivo, err := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE, 0666)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(arquivo)
 }
