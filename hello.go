@@ -63,14 +63,13 @@ func iniciarMonitoramento() {
 
 	for i := 0; i < monitoramentos; i++ {
 		for i, site := range sites {
-			fmt.Println("Testando site", i, ":", site)
+			fmt.Println("Testando site", i+1, ":", site)
 			testaSite(site)
 		}
 		time.Sleep(delay * time.Second)
 	}
 
 	fmt.Println("")
-
 }
 
 func testaSite(site string) {
